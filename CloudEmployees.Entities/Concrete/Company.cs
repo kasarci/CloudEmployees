@@ -1,6 +1,5 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace CloudEmployees.Entities.Concrete;
+
 public class Company {
   public Guid Id { get; set; }
   public string Name { get; set; }
