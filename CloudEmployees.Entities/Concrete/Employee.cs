@@ -1,8 +1,9 @@
+using CloudEmployees.Entities.Abstract;
 using CloudEmployees.Entities.Enums;
 
 namespace CloudEmployees.Entities.Concrete;
 
-public class Employee {
+public class Employee : IEntity {
   public Guid Id { get; set; }
   public string FirstName { get; set; }
   public string LastName { get; set; }
