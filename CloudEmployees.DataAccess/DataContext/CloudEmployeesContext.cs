@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CloudEmployees.DataAccess.DataContext;
 
-class CloudEmployeesContext : DbContext {
+public class CloudEmployeesContext : DbContext {
   public DbSet<Company> Companies => Set<Company>();
   public DbSet<Employee> Employees => Set<Employee>();
   public DbSet<Department> Departments => Set<Department>();
