@@ -1,6 +1,8 @@
+using CloudEmployees.Entities.Abstract;
+
 namespace CloudEmployees.Entities.Concrete;
 
-public class Company {
+public class Company : IEntity {
   public Guid Id { get; set; }
   public string Name { get; set; }
   public Address Address { get; set; }
