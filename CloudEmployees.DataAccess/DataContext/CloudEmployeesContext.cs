@@ -109,9 +109,9 @@ public class CloudEmployeesContext : DbContext {
                 .WithOne()
                 .HasForeignKey(e => e.CompanyId);
     modelBuilder.Entity<Company>()
-                .HasMany<Address>()
-                .WithOne()
-                .HasForeignKey(e => e.CompanyId);
+                .HasOne<Address>(c => c.Address)
+                .WithOne(a => a.Company)
+                .HasForeignKey<Address>(a => a.CompanyId);
 
     modelBuilder.Entity<Department>()
                 .HasMany<Employee>()
@@ -119,9 +119,9 @@ public class CloudEmployeesContext : DbContext {
                 .HasForeignKey(e => e.DepartmentId);
                 
     modelBuilder.Entity<Employee>()
-                .HasMany<Address>()
-                .WithOne()
-                .HasForeignKey(e => e.EmployeeId);
+                .HasOne<Address>(e => e.Address)
+                .WithOne(a => a.Employee)
+                .HasForeignKey<Address>(a => a.EmployeeId);
     modelBuilder.Entity<Employee>()
                 .HasOne<Employee>(e => e.Manager)
                 .WithMany(e => e.Subordinates)
