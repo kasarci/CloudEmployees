@@ -8,6 +8,8 @@ public class Address : IEntity {
   public string City { get; set; }
   public string Zipcode { get; set; }
   public string Country { get; set; }
+  public Guid? CompanyId { get; set; }
   public Company? Company { get; set; }
+  public Guid? EmployeeId { get; set; }
   public Employee? Employee { get; set; }
 }
