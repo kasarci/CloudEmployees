@@ -20,8 +20,8 @@ public class Employee : IEntity {
   public Guid CompanyId { get; set; }
   public Company Company { get; set; }
   public Guid ManagerId { get; set; }
-  public Employee? Manager { get; set; }
-  public ICollection<Employee>? Subordinates { get; set; }
+  public EmployeeManager? Manager { get; set; }
+  public ICollection<EmployeeSubordinate>? Subordinates { get; set; }
   
 }
 

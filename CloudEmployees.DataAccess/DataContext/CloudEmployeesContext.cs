@@ -124,12 +124,14 @@ public class CloudEmployeesContext : DbContext {
                 .WithOne(a => a.Employee)
                 .HasForeignKey<Address>(a => a.EmployeeId);
     modelBuilder.Entity<Employee>()
-                .HasOne<Employee>(e => e.Manager)
-                .WithMany(e => e.Subordinates)
+                .HasOne<EmployeeManager>(e => e.Manager)
+                .WithMany(e => e.Employee)
+                .HasForeignKey(e => e.ManagerId)
                 .IsRequired(false);
     modelBuilder.Entity<Employee>()
-                .HasMany<Employee>(e => e.Subordinates)
-                .WithOne(e => e.Manager)
+                .HasMany<EmployeeSubordinate>(e => e.Subordinates)
+                .WithOne(e => e.Employee)
+                .HasForeignKey(e => e.EmployeeId)
                 .IsRequired(false);
   }
   
