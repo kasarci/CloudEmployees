@@ -21,7 +21,7 @@ public class Employee : IEntity {
   public Company Company { get; set; }
   public Guid ManagerId { get; set; }
   public Employee? Manager { get; set; }
-  public List<Employee>? Subordinates { get; set; }
+  public ICollection<Employee>? Subordinates { get; set; }
   
 }
 

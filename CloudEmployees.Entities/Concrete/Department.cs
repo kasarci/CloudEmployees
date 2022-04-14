@@ -7,5 +7,5 @@ public class Department : IEntity{
   public string Name { get; set; }
   public Guid CompanyId { get; set; }
   public Company Company { get; set; }
-  public List<Employee>? Employees { get; set; }
+  public ICollection<Employee>? Employees { get; set; }
 }
