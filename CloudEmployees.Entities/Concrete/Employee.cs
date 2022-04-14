@@ -12,7 +12,7 @@ public class Employee : IEntity {
   public string PhoneNumber { get; set; }
   public Gender Gender { get; set; }
   public DateOnly BirthDate { get; set; }
-  public DateOnly StartDate { get; set; }
+  public DateOnly EmploymentDate { get; set; }
   public Guid AddressId { get; set; }
   public Address Address { get; set; }
   public Guid DepartmentId { get; set; }
