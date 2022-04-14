@@ -88,7 +88,8 @@ public class CloudEmployeesContext : DbContext {
                 .IsRequired();
     modelBuilder.Entity<Employee>()
                 .Property(e => e.Gender)
-                .HasColumnType("bit(1)")
+                .HasConversion<int>()
+                .HasColumnType("int16")
                 .IsRequired();
     modelBuilder.Entity<Employee>()
                 .Property(e => e.BirthDate)
