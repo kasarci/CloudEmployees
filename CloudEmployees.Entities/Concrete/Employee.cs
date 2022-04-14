@@ -13,11 +13,15 @@ public class Employee : IEntity {
   public Gender Gender { get; set; }
   public DateOnly BirthDate { get; set; }
   public DateOnly StartDate { get; set; }
+  public Guid AddressId { get; set; }
   public Address Address { get; set; }
+  public Guid DepartmentId { get; set; }
   public Department Department { get; set; }
+  public Guid CompanyId { get; set; }
   public Company Company { get; set; }
-  public List<Employee>? Subordinates { get; set; }
-  public Employee? Manager { get; set; }
+  public Guid ManagerId { get; set; }
+  public EmployeeManager? Manager { get; set; }
+  public ICollection<EmployeeSubordinate>? Subordinates { get; set; }
   
 }
 

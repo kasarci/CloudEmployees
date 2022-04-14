@@ -88,7 +88,8 @@ public class CloudEmployeesContext : DbContext {
                 .IsRequired();
     modelBuilder.Entity<Employee>()
                 .Property(e => e.Gender)
-                .HasColumnType("bit(1)")
+                .HasConversion<int>()
+                .HasColumnType("int16")
                 .IsRequired();
     modelBuilder.Entity<Employee>()
                 .Property(e => e.BirthDate)
@@ -103,32 +104,34 @@ public class CloudEmployeesContext : DbContext {
     modelBuilder.Entity<Company>()
                 .HasMany<Department>()
                 .WithOne()
-                .HasForeignKey(d => d.Id);
+                .HasForeignKey(d => d.CompanyId);
     modelBuilder.Entity<Company>()
                 .HasMany<Employee>()
                 .WithOne()
-                .HasForeignKey(e => e.Id);
+                .HasForeignKey(e => e.CompanyId);
     modelBuilder.Entity<Company>()
-                .HasMany<Address>()
-                .WithOne()
-                .HasForeignKey(e => e.Id);
+                .HasOne<Address>(c => c.Address)
+                .WithOne(a => a.Company)
+                .HasForeignKey<Address>(a => a.CompanyId);
 
     modelBuilder.Entity<Department>()
                 .HasMany<Employee>()
                 .WithOne()
-                .HasForeignKey(e => e.Id);
+                .HasForeignKey(e => e.DepartmentId);
                 
     modelBuilder.Entity<Employee>()
-                .HasMany<Address>()
-                .WithOne()
-                .HasForeignKey(e => e.Id);
+                .HasOne<Address>(e => e.Address)
+                .WithOne(a => a.Employee)
+                .HasForeignKey<Address>(a => a.EmployeeId);
     modelBuilder.Entity<Employee>()
-                .HasOne<Employee>(e => e.Manager)
-                .WithMany(e => e.Subordinates)
+                .HasOne<EmployeeManager>(e => e.Manager)
+                .WithMany(e => e.Employee)
+                .HasForeignKey(e => e.ManagerId)
                 .IsRequired(false);
     modelBuilder.Entity<Employee>()
-                .HasMany<Employee>(e => e.Subordinates)
-                .WithOne(e => e.Manager)
+                .HasMany<EmployeeSubordinate>(e => e.Subordinates)
+                .WithOne(e => e.Employee)
+                .HasForeignKey(e => e.EmployeeId)
                 .IsRequired(false);
   }
   
