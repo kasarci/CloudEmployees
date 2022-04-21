@@ -16,16 +16,17 @@ public class BaseEntityService<T> : IEntityService<T> where T : class, IEntity, 
     this.dbSet = _context.Set<T>();
   }
 
-  public T Create(T entity) {
-    var result = dbSet.Add(entity);
-    return result.Entity;
+  public async Task<bool> Create(T entity) {
+    await dbSet.AddAsync(entity);
+    var created = await _context.SaveChangesAsync();
+    return created > 0;
   }
 
-  public IQueryable<T> GetAll(Expression<Func<T, bool>>? filter, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy, string? includeProperties) {
+  public async Task<List<T>> GetAll(Expression<Func<T, bool>>? filter, Func<List<T>, List<T>>? orderBy, string? includeProperties) {
     IQueryable<T> query = dbSet;
 
     if (filter is not null) {
-      query = query.Where(filter);
+      query = (IQueryable<T>) query.Where(filter);
     }
 
     if (includeProperties is not null) {
@@ -36,22 +37,28 @@ public class BaseEntityService<T> : IEntityService<T> where T : class, IEntity, 
     }
 
     if (orderBy is not null) {
-      return orderBy(query);
+      return orderBy(await query.ToListAsync());
     }
-    return query;
+    return await query.ToListAsync();
   }
 
-  public T GetById(Guid id) {
-    return dbSet.First<T>(e => e.Id == id );
+  public async Task<T> GetById(Guid id) {
+    return await dbSet.FirstOrDefaultAsync<T>(e => e.Id == id );
   }
 
-  public T Remove(T entity) {
-    var result = dbSet.Remove(entity);
-    return result.Entity;
+  public async Task<bool> Remove(Guid Id) {
+    var entity = await GetById(Id);
+    if ( entity is null ) {
+      return false;
+    }
+    dbSet.Remove(entity);
+    var deleted = await _context.SaveChangesAsync();
+    return deleted > 0;    
   }
 
-  public T Update(T entity) {
+  public async Task<bool> Update(T entity) {
     var result = dbSet.Update(entity);
-    return result.Entity;
+    var updated = await _context.SaveChangesAsync();
+    return updated > 0;
   }
 }
